@@ -6,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+       <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('content')
     <div class="container-fluid py-4">
@@ -30,8 +32,7 @@
                                         <th>Teacher Name</th>
                                         <th>IP Address</th>
                                         <th>Location</th>
-                                        <th>Check In</th>
-                                        <th>Check Out</th>
+                                        <th>Teacher Attendance</th>
                                         <th>Map</th>
                                         <th>Status</th>
                                     </tr>
@@ -42,8 +43,10 @@
                                             <td>{{ $attendance->users->name}}</td>
                                             <td>{{ $attendance->ip_address}}</td>
                                             <td>{{ $attendance->location}}</td>
-                                            <td>{{ $attendance->check_in_time}}</td>
-                                            <td>{{ $attendance->check_out_time}}</td>
+                                            <td>
+                                               <span class="badge bg-primary">{{ $attendance->check_in_time}}</span>
+                                               <span class="badge bg-secondary"> {{ $attendance->check_out_time}}</span>
+                                            </td>
                                             <td>
                                                 @if ($attendance->latitude && $attendance->longitude)
                                                     <iframe width="250" height="150" style="border:0" loading="lazy"
@@ -86,4 +89,22 @@
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+         $(document).ready(function() {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search teacher name..."
+                }
+            });
+        });
+    </script>
 @endsection

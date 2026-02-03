@@ -6,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -16,12 +18,12 @@
                     @if (old('form_type') === 'create')
                         let roleFormModal = new bootstrap.Modal(document.getElementById('studentFormModal'));
                         roleFormModal.show();
-                        @elseif (old('form_type') === 'edit')
-                            @if (old('edit_type'))
-                                let editFormModal = new bootstrap.Modal(document.getElementById(
-                                    'editFormModal{{ old('edit_type') }}'));
-                                editFormModal.show();
-                            @endif
+                    @elseif (old('form_type') === 'edit')
+                        @if (old('edit_type'))
+                            let editFormModal = new bootstrap.Modal(document.getElementById(
+                                'editFormModal{{ old('edit_type') }}'));
+                            editFormModal.show();
+                        @endif
                     @endif
                 @endif
 
@@ -34,7 +36,7 @@
             });
         </script>
     @endif
-       <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             const deleteButtons = document.querySelectorAll('.delete-btn');
 
@@ -117,7 +119,8 @@
                                                     </button>
 
                                                     <!-- Delete button with confirmation -->
-                                                    <form action="{{ route("coursedestroy",$course->id) }}" method="POST" class="d-inline">
+                                                    <form action="{{ route('coursedestroy', $course->id) }}" method="POST"
+                                                        class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button"
@@ -159,10 +162,10 @@
                             <textarea id="CourseDescription" rows="5" cols="5" name="CourseDescription" class="form-control"
                                 placeholder="Enter Course Description">{{ old('CourseDescription') }}</textarea>
                         </div>
-                          <div class="mb-3">
+                        <div class="mb-3">
                             <label for="CoursePrice" class="form-label">Course Price</label>
-                            <input id="CoursePrice" value="{{ old("Course Price") }}" name="CoursePrice" class="form-control"
-                                placeholder="Enter Course Price"/>
+                            <input id="CoursePrice" value="{{ old('Course Price') }}" name="CoursePrice"
+                                class="form-control" placeholder="Enter Course Price" />
                         </div>
                         <div class="mb-3">
                             <label for="Image" class="form-label">Image</label>
@@ -188,7 +191,7 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <form action="{{ route("courseedit",$course->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('courseedit', $course->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
@@ -206,7 +209,7 @@
                                 <textarea type="text" rows="5" cols="5" class="form-control" id="Description{{ $course->id }}"
                                     value="" name="Description">{{ $course->Course_Description }}</textarea>
                             </div>
-                              <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="Description{{ $course->id }}" class="form-label fw-semibold">Course
                                     Price</label>
                                 <input type="text" class="form-control" id="Price{{ $course->id }}"
@@ -215,8 +218,8 @@
                             <div class="mb-3">
                                 <label for="CourseImage{{ $course->id }}" class="form-label fw-semibold">Current
                                     Image</label>
-                                <img src="{{ asset('storage/' . $course->Course_Image) }}"
-                                    class="img-fluid rounded mb-2" style="max-width: 100px; height: auto;">
+                                <img src="{{ asset('storage/' . $course->Course_Image) }}" class="img-fluid rounded mb-2"
+                                    style="max-width: 100px; height: auto;">
                             </div>
                             <div class="mb-3">
                                 <label for="Image{{ $course->id }}" class="form-label fw-semibold">Update
@@ -239,4 +242,22 @@
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search course..."
+                }
+            });
+        });
+    </script>
 @endsection

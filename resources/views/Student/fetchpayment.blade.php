@@ -1,14 +1,16 @@
-@extends("layout")
+@extends('layout')
 @section('title')
-Dashboard
+    Dashboard
 @endsection
 @section('css')
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('content')
-<div class="container-fluid py-4">
+    <div class="container-fluid py-4">
         <div class="row justify-content-center">
             <div class="col-12 col-xl-10">
                 <div class="card shadow rounded-4">
@@ -40,12 +42,12 @@ Dashboard
                                     @foreach ($payements as $payement)
                                         <tr>
                                             <td>{{ $payement->courses->Course_Name }}</td>
-                                            <td>{{ $payement->Customer_Name}}</td>
-                                            <td>{{ $payement->Customer_Email}}</td>
+                                            <td>{{ $payement->Customer_Name }}</td>
+                                            <td>{{ $payement->Customer_Email }}</td>
                                             <td>{{ $payement->Country }}</td>
                                             <td>{{ $payement->City }}</td>
-                                            <td>{{ $payement->Amount }} {{$payement->Currency}}</td>
-                                            <td>{{ $payement->description}}</td>
+                                            <td>{{ $payement->Amount }} {{ $payement->Currency }}</td>
+                                            <td>{{ $payement->description }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -58,5 +60,23 @@ Dashboard
     </div>
 @endsection
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search course name..."
+                }
+            });
+        });
+    </script>
 @endsection

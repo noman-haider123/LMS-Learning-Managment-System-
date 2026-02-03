@@ -1,15 +1,17 @@
-@extends("layout")
+@extends('layout')
 @section('title')
-Why Choose Us
+    Why Choose Us
 @endsection
 @section('css')
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- @if ($errors->any())
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if ($errors->any())
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 @if ($errors->any())
@@ -34,7 +36,7 @@ Why Choose Us
             });
         </script>
     @endif
-     @if (session('success'))
+    @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -46,7 +48,7 @@ Why Choose Us
         </script>
     @endif
     @if (session('error'))
-          <script>
+        <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'success',
@@ -56,7 +58,7 @@ Why Choose Us
             });
         </script>
     @endif
-     <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             const deleteButtons = document.querySelectorAll('.delete-btn');
 
@@ -82,7 +84,7 @@ Why Choose Us
             });
         });
     </script>
- <div class="container-fluid py-4">
+    <div class="container-fluid py-4">
         <div class="row justify-content-center">
             <div class="col-12 col-xl-10">
                 <div class="card shadow rounded-4">
@@ -111,8 +113,9 @@ Why Choose Us
                                     @foreach ($Why_Choose_us as $Why_Choose_uss)
                                         <tr>
                                             <td>{{ $Why_Choose_uss->name }}</td>
-                                            <td>{{ $Why_Choose_uss->description}}</td>
-                                            <td><img src="{{ asset('storage/'. $Why_Choose_uss->image) }}" class="img-fluid rounded" style="max-width: 100px; height: auto;"></td>
+                                            <td>{{ $Why_Choose_uss->description }}</td>
+                                            <td><img src="{{ asset('storage/' . $Why_Choose_uss->image) }}"
+                                                    class="img-fluid rounded" style="max-width: 100px; height: auto;"></td>
                                             <td>
                                                 <div class="d-flex justify-content-center gap-2">
                                                     <!-- Edit button -->
@@ -123,7 +126,7 @@ Why Choose Us
                                                     </button>
 
                                                     <!-- Delete button with confirmation -->
-                                                    <form action="{{ route('whychoosemedestroy',$Why_Choose_uss->id) }}"
+                                                    <form action="{{ route('whychoosemedestroy', $Why_Choose_uss->id) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -144,7 +147,7 @@ Why Choose Us
             </div>
         </div>
     </div>
-      <div class="modal fade" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
+    <div class="modal fade" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow-lg">
                 <div class="modal-header bg-primary text-white">
@@ -152,21 +155,24 @@ Why Choose Us
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <form id="studentForm" action="{{ route('whychoosemestore') }}" method="POST" enctype="multipart/form-data">
+                <form id="studentForm" action="{{ route('whychoosemestore') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
                             <input type="hidden" name="form_type" value="create">
                             <label for="name" class="form-label #editFormModal">Name</label>
-                            <input type="text" name="name" id="name" value="{{ old("name") }}" class="form-control">
+                            <input type="text" name="name" id="name" value="{{ old('name') }}"
+                                class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                           <textarea name="description" id="description" cols="5" rows="5" class="form-control">{{old("description")}}</textarea>
+                            <textarea name="description" id="description" cols="5" rows="5" class="form-control">{{ old('description') }}</textarea>
                         </div>
-                           <div class="mb-3">
+                        <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
-                           <input type="file" id="image" name="image" value="{{ old('image') }}" class="form-control"></input>
+                            <input type="file" id="image" name="image" value="{{ old('image') }}"
+                                class="form-control"></input>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -177,7 +183,7 @@ Why Choose Us
             </div>
         </div>
     </div>
-     @foreach ($Why_Choose_us as $Why_Choose_uss)
+    @foreach ($Why_Choose_us as $Why_Choose_uss)
         <div class="modal fade" id="editFormModal{{ $Why_Choose_uss->id }}" tabindex="-1"
             aria-labelledby="editFormModalLabel{{ $Why_Choose_uss->id }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -187,7 +193,7 @@ Why Choose Us
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('whychoosemeedit',$Why_Choose_uss->id) }}" method="POST">
+                    <form action="{{ route('whychoosemeedit', $Why_Choose_uss->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
@@ -197,20 +203,22 @@ Why Choose Us
                                 <label for="name{{ $Why_Choose_uss->id }}" class="form-label fw-semibold">
                                     Name</label>
                                 <input type="text" class="form-control" id="name{{ $Why_Choose_uss->id }}"
-                                    value="{{ $Why_Choose_uss->name}}" name="name">
+                                    value="{{ $Why_Choose_uss->name }}" name="name">
                             </div>
                             <div class="mb-3">
                                 <label for="description{{ $Why_Choose_uss->id }}" class="form-label fw-semibold">
                                     Description</label>
-                                <textarea type="text" class="form-control" cols="5" rows="5" id="description{{ $Why_Choose_uss->id }}" name="description">{{$Why_Choose_uss->description}}</textarea>
+                                <textarea type="text" class="form-control" cols="5" rows="5"
+                                    id="description{{ $Why_Choose_uss->id }}" name="description">{{ $Why_Choose_uss->description }}</textarea>
                             </div>
                             <div class="mb-3">
-                              <img src="{{ asset('storage/' . $Why_Choose_uss->image)}}" class="img-fluid rounded" style="max-width: 100px; height: auto;">
+                                <img src="{{ asset('storage/' . $Why_Choose_uss->image) }}" class="img-fluid rounded"
+                                    style="max-width: 100px; height: auto;">
                             </div>
                             <div class="mb-3">
-                             <label for="name" class="form-label fw-semibold">
+                                <label for="name" class="form-label fw-semibold">
                                     Image</label>
-                               <input type="file" name="image" class="form-control">     
+                                <input type="file" name="image" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -227,5 +235,23 @@ Why Choose Us
     @endforeach
 @endsection
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+         $(document).ready(function() {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search choose category..."
+                }
+            });
+        });
+    </script>
 @endsection

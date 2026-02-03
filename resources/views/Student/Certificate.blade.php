@@ -6,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endsection
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -90,12 +92,12 @@
                     <div class="card-header bg-primary text-white rounded-top-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="mb-0">🖼️ Student Certificate</h4>
-                            @can('Add Certificate') 
-                            <button type="button" class="btn btn-light" data-bs-toggle="modal"
-                            data-bs-target="#studentFormModal">
-                            <i class="bi bi-plus-lg"></i> Add Certificate for Student
-                        </button>
-                        @endcan
+                            @can('Add Certificate')
+                                <button type="button" class="btn btn-light" data-bs-toggle="modal"
+                                    data-bs-target="#studentFormModal">
+                                    <i class="bi bi-plus-lg"></i> Add Certificate for Student
+                                </button>
+                            @endcan
                         </div>
                     </div>
 
@@ -119,24 +121,24 @@
                                             <td>
                                                 <div class="d-flex justify-content-center gap-2">
                                                     @can('Edit Certificate')
-                                                    <button type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#editFormModal{{ $certificates->id }}"
-                                                    class="btn btn-sm btn-outline-primary">
-                                                    <i class="bi bi-pencil"></i> Edit
-                                                </button>
-                                                @endcan             <!-- Edit button -->
+                                                        <button type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#editFormModal{{ $certificates->id }}"
+                                                            class="btn btn-sm btn-outline-primary">
+                                                            <i class="bi bi-pencil"></i> Edit
+                                                        </button>
+                                                    @endcan <!-- Edit button -->
                                                     <!-- Delete button with confirmation -->
-                                                    @can('delete certificate')  
-                                                    <form action="{{ route('certificatedestroy', $certificates->id) }}"
-                                                        method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button"
-                                                        class="btn btn-sm btn-outline-danger delete-btn">
-                                                        <i class="bi bi-trash"></i> Delete
-                                                    </button>
-                                                </form>
-                                                @endcan
+                                                    @can('delete certificate')
+                                                        <form action="{{ route('certificatedestroy', $certificates->id) }}"
+                                                            method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-outline-danger delete-btn">
+                                                                <i class="bi bi-trash"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    @endcan
                                                     <a href="{{ route('certificate.download', $certificates->id) }}"
                                                         class="btn btn-sm btn-outline-success" target="_blank">
                                                         <i class="bi bi-award"></i> Download Certificate
@@ -271,4 +273,22 @@
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                responsive: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search students..."
+                }
+            });
+        });
+    </script>
 @endsection
