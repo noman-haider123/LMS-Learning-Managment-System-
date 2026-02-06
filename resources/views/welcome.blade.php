@@ -386,35 +386,6 @@
             @endforeach
         });
     </script>
-    <!-- Why Choose Us Section -->
-    <section class="py-5" id="why-choose-us">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col text-center">
-                    <h2 class="fw-bold">Why Choose LearnHub?</h2>
-                    <p class="text-muted">We provide the best learning experience for our students</p>
-                </div>
-            </div>
-
-            <div class="row g-4">
-                @foreach ($why_choose_us as $why_choose_uss)
-                    <div class="col-md-6 col-lg-3">
-                        <div class="text-center p-4 feature-card h-100 shadow rounded">
-                            <div class="feature-icon mb-3">
-                                <img src="{{ asset('storage/' . $why_choose_uss->image) }}" class="img-fluid"
-                                    alt="{{ $why_choose_uss->name }}" style="height: 100px; object-fit: contain;">
-                            </div>
-                            <h5>{{ $why_choose_uss->name }}</h5>
-                            <p class="text-muted">{{ $why_choose_uss->description }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-
     <section class="py-5 bg-light" id="testimonials">
         <div class="container">
             <div class="row mb-5">
@@ -455,6 +426,35 @@
             </div>
         </div>
     </section>
+    <!-- Why Choose Us Section -->
+    <section class="py-5" id="why-choose-us">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col text-center">
+                    <h2 class="fw-bold">Why Choose LearnHub?</h2>
+                    <p class="text-muted">We provide the best learning experience for our students</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                @foreach ($why_choose_us as $why_choose_uss)
+                    <div class="col-md-6 col-lg-3">
+                        <div class="text-center p-4 feature-card h-100 shadow rounded">
+                            <div class="feature-icon mb-3">
+                                <img src="{{ asset('storage/' . $why_choose_uss->image) }}" class="img-fluid"
+                                    alt="{{ $why_choose_uss->name }}" style="height: 100px; object-fit: contain;">
+                            </div>
+                            <h5>{{ $why_choose_uss->name }}</h5>
+                            <p class="text-muted">{{ $why_choose_uss->description }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-4">
         <div class="container">
